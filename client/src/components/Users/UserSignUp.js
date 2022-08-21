@@ -56,7 +56,7 @@ const UserSignUp =  () => {
           setErrors(errors);
         } else {
           context.actions.signIn(user.emailAddress, user.password).then(() => {
-            history.push("/authenticated");
+            history.push("/");
           });
         }
       })

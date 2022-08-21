@@ -2,7 +2,7 @@ import React from 'react';
 // import ReactDOM from 'react-dom/client';
 import './index.css';
 // import reportWebVitals from './reportWebVitals';
-import { Provider } from './components/Context';
+import { Provider } from './components/Context/Context';
 // import { createRoot } from "react-dom/client";
 import ReactDOM from 'react-dom';
 

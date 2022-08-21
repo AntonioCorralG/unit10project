@@ -30,7 +30,7 @@ a {
   padding: 0 1rem;
 }
 header {
-  background: #57496e;
+  background: #330d93;
   color: #fff;
   padding: 1rem 0;
   margin-bottom: 2rem;
@@ -42,16 +42,16 @@ header {
 }
 .header--logo a {
   font-size: 1.25rem;
-  color: #fff;
+  color: rgb(117, 122, 150);
 }
 header li {
   font-size: .8rem;
 }
 header nav a {
-  color: #dbd;
+  color: rgb(160, 164, 200);
 }
 header nav a:hover {
-  color: #fff;
+  color: #E0D228;
 }
 
 .header--signedin li {
@@ -63,14 +63,14 @@ header nav a:hover {
   margin-left: .5rem;
 }
 .course--module {
-  background: #7c689b;
+  background: #948A0F;
   border-radius: .5rem;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   display: block;
 }
 .course--label {
-  color: #fff;
+  color: #E0D228;
   font-size: .9rem;
   font-weight: 400;
   margin-bottom: .25rem;
@@ -168,8 +168,8 @@ textarea {
   min-height: 300px;
 }
 .button {
-  background: #864fd9;
-  color: #fff;
+  background: rgb(160, 164, 200);
+  color: rgb(22, 39, 123);
   font-size: 1rem;
   padding: .75rem 1.5rem;
   border: 0;
@@ -185,11 +185,11 @@ textarea {
   margin-bottom: 0;
 }
 .button:not(.button-secondary):hover {
-  background: #a68cd0;
+  background: #E0D228;
   cursor: pointer;
 }
 .button-secondary {
-  color: #7c689b;
+  color: #7B47FF;
   background: none;
   box-shadow: 0 0 0 2px #7c689b inset;
   transition: box-shadow 0.2s, color 0.2s;

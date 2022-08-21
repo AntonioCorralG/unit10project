@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../Context/Context";
 import { Link, useParams, useHistory } from "react-router-dom";
+import ReactMarkdown from 'react-markdown';
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
@@ -12,14 +13,17 @@ const CourseDetail = () => {
   useEffect(() => {
     data
       .courseDetail(id)
-      .then((res) => setCourse(res))
+      .then((res) => 
+      {
+        console.log("This is",course)
+        setCourse(res)})
       .catch((err) => {
         console.log(err);
       });
   }, [data, id]);
 
   useEffect(() => {
-    if (course && authenticatedUser && course.userId === authenticatedUser) {
+    if (course && authenticatedUser && course.userId === authenticatedUser.id) {
       setIsEditing(true);
     } else {
       setIsEditing(false);
@@ -39,13 +43,13 @@ const CourseDetail = () => {
 
   //this moves the user to the update component to PUT an update on a course
   const updateCourseHandler = () => {
-    history(`/courses/${course.id}/update`);
+    history.push(`/courses/${course.id}/update`);
   };
 
   return (
     <div className="actions--bar">
       <div className="wrap">
-        {!isEditing && (
+        {isEditing && (
           <span>
             <button onClick={updateCourseHandler} className="button">
               Update Course
@@ -72,13 +76,13 @@ const CourseDetail = () => {
                   By: {course.User.firstName} {course.User.lastName}
                 </p>
               )}
-              <p>{course.description}</p>
+              <ReactMarkdown>{course.description}</ReactMarkdown>
             </div>
             <div>
               <h3 className="course--detail--title"> Estimated Time:</h3>
               <p>{course.estimatedTime}</p>
               <h3 className="course--detail--title"> Materials Needed: </h3>
-              <p>{course.materialsNeeded}</p>
+              <ReactMarkdown>{course.materialsNeeded}</ReactMarkdown>
             </div>
           </div>
         </form>
