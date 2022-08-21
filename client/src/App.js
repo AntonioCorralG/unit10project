@@ -8,12 +8,12 @@ import Header from './/components/Header';
 import UserSignUp from './components/Users/UserSignUp';
 import UserSignOut from './components/Users/UserSignOut';
 // import Public from "./components/Public";
-import NotFound from './components/NotFound';
+import InvalidPath from './components/InvalidPath';
 import Courses from './components/Courses/Courses'
 import CourseDetail from './components/Courses/CourseDetail';
 import CreateCourse from './components/Courses/CreateCourse';
 import UpdateCourse from './components/Courses/UpdateCourse';
-
+import Unauthorized from "./components/Unauthorized";
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -45,7 +45,8 @@ export default () => {
           <Route path="/signin" component={UserSignInWithContext} />
           <Route path="/signup" component={UserSignUpWithContext} />
           <Route path="/signout" component={UserSignOutWithContext} />
-          <Route component={NotFound} />
+          <Route path="/unauthorized" component={Unauthorized} />
+          <Route path="*" component={InvalidPath} />
         </Switch>
       </div>{" "}
     </Router>
