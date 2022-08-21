@@ -3,26 +3,39 @@ import { Context } from "../Context/Context";
 import { Link, useHistory } from "react-router-dom";
 
 const CreateCourse = () => {
-  //sets the initial state of the course to be saved into after the change event
   const { data, loggedInuser } = useContext(Context);
-  const [createCourse, setCreateCourse] = useState({
-    title: "",
-    description: "",
-    estimatedTime: "",
-    materialsNeeded: "",
-    userId: loggedInuser?.id,
-  });
+  const [title, setTitle ] = useState('');
+  const [description, setDescription ] = useState('');
+  const [ estimatedTime, setEstimatedTime ] =useState('');
+  const [ materialsNeeded, setMaterialNeeded ] = useState('');
+  const [userId, setUserId] = useState('');
   const [errors, setErrrors] = useState([]);
   const history = useHistory();
 
-  //change method for storing the entered text
   const entered = (e) => {
-    const { name, value } = e.target;
-    setCreateCourse((course) => ({ ...course, [name]: value }));
+    const value = e.target.value;
+    if (e.target.name === "title") {
+      setTitle(value);
+    } else if (e.target.name === "description") {
+      setDescription(value);
+    } else if (e.target.name === "estimatedTime") {
+      setEstimatedTime(value);
+    } else if (e.target.name === "materialsNeeded") {
+      setMaterialNeeded(value);
+    }
   };
-//handles the submit button for course creation
+
+// Creates the course of all the fields are valid
   const submitHandler = (e) => {
     e.preventDefault();
+    setUserId(loggedInuser?.id);
+    const createCourse = {
+      title,
+      description,
+      estimatedTime,
+      materialsNeeded,
+      userId
+    }
     data
       .createCourse(createCourse, loggedInuser)
       .then((errors) => {
@@ -32,14 +45,11 @@ const CreateCourse = () => {
           history.push("/");
         }
       })
-      // .catch((err) => {
-      //   history("./error");
-      // });
   };
   return (
     <div className="wrap">
       <h2> Create Course</h2>
-      {/* ternary operator for determining whether their are errors, if so then validation errors are shown */}
+      {/* ternary operator for determining whether there are errors, if so then validation errors are shown */}
       {errors.length ? (
         <>
           <div className="validation--errors">
@@ -62,7 +72,7 @@ const CreateCourse = () => {
               id="title"
               name="title"
               type="text"
-              value={createCourse.title}
+              value={title}
               onChange={entered}
             />
             <br></br>
@@ -75,7 +85,7 @@ const CreateCourse = () => {
               id="description"
               name="description"
               type="textarea"
-              value={createCourse.description}
+              value={description}
               onChange={entered}
             />
           </div>
@@ -85,7 +95,7 @@ const CreateCourse = () => {
               id="estimatedTime"
               name="estimatedTime"
               type="text"
-              value={createCourse.estimatedTime}
+              value={estimatedTime}
               onChange={entered}
             />
             <br></br>
@@ -94,7 +104,7 @@ const CreateCourse = () => {
               id="materialsNeeded"
               name="materialsNeeded"
               type="textarea"
-              value={createCourse.materialsNeeded}
+              value={materialsNeeded}
               onChange={entered}
             />
           </div>

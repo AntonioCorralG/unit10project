@@ -1,8 +1,8 @@
+// This component will allow a user to update the course if they are the owner 
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../Context/Context";
 import { Link, useHistory, useParams } from "react-router-dom";
 
-//allows for updates to the course if the user.id matche the course.id
 const UpdateCourse = () => {
   const { data, loggedInuser } = useContext(Context);
   const [errors, setErrors] = useState([]);
@@ -10,7 +10,6 @@ const UpdateCourse = () => {
   const history = useHistory();
   const { id } = useParams();
 
-  //
   useEffect(() => {
     data
       .courseDetail(id)
@@ -19,12 +18,12 @@ const UpdateCourse = () => {
       .catch((err) => console.log(err));
   }, [data, id]);
 
-//catches user changes and updates them on the DOM
+// Handles the user input ans updates the course details on the page
   const changeHandler = (event) => {
     const { name, value } = event.target;
     setCourse((course) => ({ ...course, [name]: value }));
   };
-//submits updates to the course
+// Submit the user changes for course update
   const submitHandler = (event) => {
     event.preventDefault();
     data
@@ -37,7 +36,7 @@ const UpdateCourse = () => {
         }
       })
       .catch((err) => {
-        history.push("/notfound");
+        history.push("/invalidPath");
       });
   };
   return (
