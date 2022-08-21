@@ -71,7 +71,7 @@ const CreateCourse = () => {
             </div>
             <br></br>
             <label> Course Description*</label>
-            <input
+            <textarea
               id="description"
               name="description"
               type="textarea"
@@ -88,8 +88,9 @@ const CreateCourse = () => {
               value={createCourse.estimatedTime}
               onChange={entered}
             />
+            <br></br>
             <label htmlFor="materialsNeeded">Material Needed:</label>
-            <input
+            <textarea
               id="materialsNeeded"
               name="materialsNeeded"
               type="textarea"
