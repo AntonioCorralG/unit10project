@@ -62,6 +62,7 @@ export default class UserSignIn extends Component {
   };
 //submits the user's authentication information
   submit = () => {
+    if(this.state.emailAddress.length > 0 && this.state.password.length > 0) {
     const { context } = this.props;
     const { from } = this.props.location.state || {
       from: { pathname: "/" },
@@ -72,9 +73,10 @@ export default class UserSignIn extends Component {
       .signIn(emailAddress, password)
       .then((user) => {
         if (user === null) {
-          this.setState(() => {
-            return { errors: ["Sign-in was unsuccessful"] };
-          });
+          // this.setState(() => {
+          //   return { errors: ["Sign-in was unsuccessful"] };
+          // });
+          this.setState({ errors : ["Invalid credentials!!!"]});
         } else {
           this.props.history.push(from);
         }
@@ -83,6 +85,17 @@ export default class UserSignIn extends Component {
         console.error(error);
         this.props.history.push("/error");
       });
+    }
+    else {
+      const error = [];
+      if(this.state.emailAddress.length  == 0) {
+        error.push("Email address is a mandatory field");
+      }
+      if(this.state.password.length == 0) {
+        error.push("Password is a mandatory field");
+      }
+      this.setState({errors : error});
+    }
   };
 
   //pushes the user to the courses page
