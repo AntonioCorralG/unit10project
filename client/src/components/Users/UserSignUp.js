@@ -7,19 +7,12 @@ const UserSignUp =  () => {
   const context = useContext(Context);
   let history = useHistory();
 
+  // state variables to hold the form values
   const [firstName, setFirstName ] = useState('');
   const [lastName, setLastName ] = useState('');
   const [ emailAddress, setEmailAddress ] =useState('');
   const [ password, setPassword ] = useState('');
   const [errors, setErrors] = useState([]);
-
-  // const [user, setUser] = useState({
-  //   firstName: '',
-  //   lastName: '',
-  //   emailAddress: '',
-  //   password: '',
-  // });
-
 
   const change = (e) => {
     const value = e.target.value;
@@ -36,13 +29,8 @@ const UserSignUp =  () => {
     }
   };
 
-  // const change = (e) => {
-  //   const { name, value } = e.target;
-  //   setUser((user) => ({ ...user, [name]: value }));
-  // };
-
-
   const submit = () => {
+    if(password.length > 0 && firstName.length > 0 && lastName.length > 0 && emailAddress.length > 0) {
     const user = {
       firstName,
       lastName,
@@ -64,6 +52,23 @@ const UserSignUp =  () => {
         console.log(err);
         history.push("/error");
       });
+    }
+    else {
+      const error = [];
+      if(firstName.length  == 0) {
+        error.push("First Name is a mandatory field");
+      }
+      if(lastName.length == 0) {
+        error.push("Last Name is a mandatory field");
+      }
+      if(emailAddress.length == 0) {
+        error.push("Email address is a mandatory field");
+      }
+      if(password.length == 0) {
+        error.push("Password is a mandatory field");
+      }
+      setErrors(error);
+    }
   };
 
   const cancel = () => {
