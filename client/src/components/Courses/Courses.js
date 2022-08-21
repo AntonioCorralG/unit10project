@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const Courses = (props) => {
   const [courses, setCourses] = useState([]);
   const { data } = useContext(Context);
-
+//gets the courses with the response from the backend
   useEffect(() => {
     data
       .getCourses()

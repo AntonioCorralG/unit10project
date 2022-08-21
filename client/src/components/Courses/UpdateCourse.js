@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../Context/Context";
-import { Link, useHistory, useParams, Redirect } from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 
+//allows for updates to the course if the user.id matche the course.id
 const UpdateCourse = () => {
   const { data, authenticatedUser } = useContext(Context);
   const [errors, setErrors] = useState([]);
@@ -9,20 +10,21 @@ const UpdateCourse = () => {
   const history = useHistory();
   const { id } = useParams();
 
+  //
   useEffect(() => {
     data
       .courseDetail(id)
       .then((course) => {
-        console.log("Course fetched is", course);
         setCourse(course)})
       .catch((err) => console.log(err));
   }, [data, id]);
 
+//catches user changes and updates them on the DOM
   const changeHandler = (event) => {
     const { name, value } = event.target;
     setCourse((course) => ({ ...course, [name]: value }));
   };
-
+//submits updates to the course
   const submitHandler = (event) => {
     event.preventDefault();
     data

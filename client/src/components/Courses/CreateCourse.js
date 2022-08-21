@@ -15,13 +15,12 @@ const CreateCourse = () => {
   const [errors, setErrrors] = useState([]);
   const history = useHistory();
 
-  //change method for storing the course
+  //change method for storing the entered text
   const entered = (e) => {
     const { name, value } = e.target;
     setCreateCourse((course) => ({ ...course, [name]: value }));
-    //confused here
   };
-
+//handles the submit button for course creation
   const submitHandler = (e) => {
     e.preventDefault();
     data
@@ -40,6 +39,7 @@ const CreateCourse = () => {
   return (
     <div className="wrap">
       <h2> Create Course</h2>
+      {/* ternary operator for determining whether their are errors, if so then validation errors are shown */}
       {errors.length ? (
         <>
           <div className="validation--errors">

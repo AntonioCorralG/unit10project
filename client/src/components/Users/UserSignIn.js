@@ -49,6 +49,7 @@ export default class UserSignIn extends Component {
     );
   }
 
+  //displays what the user typed on the DOM
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -59,7 +60,7 @@ export default class UserSignIn extends Component {
       };
     });
   };
-
+//submits the user's authentication information
   submit = () => {
     const { context } = this.props;
     const { from } = this.props.location.state || {
@@ -84,6 +85,7 @@ export default class UserSignIn extends Component {
       });
   };
 
+  //pushes the user to the courses page
   cancel = () => {
     this.props.history.push("/");
   };

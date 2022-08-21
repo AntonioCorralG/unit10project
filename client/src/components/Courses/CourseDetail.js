@@ -10,18 +10,19 @@ const CourseDetail = () => {
   const [isEditing, setIsEditing] = useState(false);
   const history = useHistory();
 
+  //this get the course with the response from the backend
   useEffect(() => {
     data
       .courseDetail(id)
       .then((res) => 
       {
-        console.log("This is",course)
         setCourse(res)})
       .catch((err) => {
         console.log(err);
       });
   }, [data, id]);
 
+  //determines if the user is the one who created the course and allows for editing
   useEffect(() => {
     if (course && authenticatedUser && course.userId === authenticatedUser.id) {
       setIsEditing(true);
@@ -38,7 +39,7 @@ const CourseDetail = () => {
       } else {
         console.log("Course has been deleted.");
       }
-    });
+    }).then(() => history.push("/"));
   };
 
   //this moves the user to the update component to PUT an update on a course
@@ -49,6 +50,7 @@ const CourseDetail = () => {
   return (
     <div className="actions--bar">
       <div className="wrap">
+        {/* ternary operator determined by isEditing to allow the authenticatedUser to edit the course */}
         {isEditing && (
           <span>
             <button onClick={updateCourseHandler} className="button">

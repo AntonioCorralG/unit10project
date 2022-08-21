@@ -70,9 +70,6 @@ const UserSignUp =  () => {
     history.push("/");
   };
 
-  // cancel = () => {
-  //   this.props.history.push('/');
-  // };
 
   return (
     <div className="form form--centered">
