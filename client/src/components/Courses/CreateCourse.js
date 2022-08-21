@@ -4,13 +4,13 @@ import { Link, useHistory } from "react-router-dom";
 
 const CreateCourse = () => {
   //sets the initial state of the course to be saved into after the change event
-  const { data, authenticatedUser } = useContext(Context);
+  const { data, loggedInuser } = useContext(Context);
   const [createCourse, setCreateCourse] = useState({
     title: "",
     description: "",
     estimatedTime: "",
     materialsNeeded: "",
-    userId: authenticatedUser?.id,
+    userId: loggedInuser?.id,
   });
   const [errors, setErrrors] = useState([]);
   const history = useHistory();
@@ -24,7 +24,7 @@ const CreateCourse = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     data
-      .createCourse(createCourse, authenticatedUser)
+      .createCourse(createCourse, loggedInuser)
       .then((errors) => {
         if (errors.length) {
           setErrrors(errors);
@@ -67,7 +67,7 @@ const CreateCourse = () => {
             />
             <br></br>
             <div>
-              By: {authenticatedUser?.firstName} {authenticatedUser?.lastName}
+              By: {loggedInuser?.firstName} {loggedInuser?.lastName}
             </div>
             <br></br>
             <label> Course Description*</label>

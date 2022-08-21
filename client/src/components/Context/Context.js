@@ -1,6 +1,4 @@
-//this needs to be imported to components that would otherwise have prop drilling
-
-import React, { Component, useTransition } from "react";
+import React, { Component } from "react";
 import Data from "../../Data";
 
 export const Context = React.createContext();
@@ -9,15 +7,15 @@ export class Provider extends Component {
   constructor() {
     super();
     this.data = new Data();
-    this.state = { authenticatedUser: null };
+    this.state = { loggedInuser: null };
 
   }
 
   render() {
-    const { authenticatedUser } = this.state;
+    const { loggedInuser } = this.state;
 
     const value = {
-      authenticatedUser,
+      loggedInuser,
       data: this.data,
       actions: {
         signIn: this.signIn,
@@ -33,7 +31,7 @@ export class Provider extends Component {
     const user = await this.data.getUser(emailAddress, password);
     if (user) {
       user.password = password;
-      this.setState({authenticatedUser : user});
+      this.setState({loggedInuser : user});
     }
     else {
       return null;
@@ -41,18 +39,11 @@ export class Provider extends Component {
   };
 
   signOut = () => {
-    this.setState({ authenticatedUser: null });
-    // Cookies.remove("authenticatedUser");
+    this.setState({ loggedInuser: null });
   };
 }
 
 export const Consumer = Context.Consumer;
-
-/**
- * A higher-order component that wraps the provided component in a Context Consumer component.
- * @param {class} Component - A React component.
- * @returns {function} A higher-order component.
- */
 
 export default function withContext(Component) {
   return function ContextComponent(props) {

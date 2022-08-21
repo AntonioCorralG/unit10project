@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 
 const CourseDetail = () => {
   const [course, setCourse] = useState({});
-  const { data, authenticatedUser } = useContext(Context);
+  const { data, loggedInuser } = useContext(Context);
   const { id } = useParams();
   const [isEditing, setIsEditing] = useState(false);
   const history = useHistory();
@@ -24,16 +24,16 @@ const CourseDetail = () => {
 
   //determines if the user is the one who created the course and allows for editing
   useEffect(() => {
-    if (course && authenticatedUser && course.userId === authenticatedUser.id) {
+    if (course && loggedInuser && course.userId === loggedInuser.id) {
       setIsEditing(true);
     } else {
       setIsEditing(false);
     }
-  }, [course, authenticatedUser]);
+  }, [course, loggedInuser]);
 
-  //method to delete course if the ID matches the authenticatedUser
+  //method to delete course if the ID matches the logged in user
   const deleteCourseHandler = () => {
-    data.deleteCourse(course.id, authenticatedUser).then((errors) => {
+    data.deleteCourse(course.id, loggedInuser).then((errors) => {
       if (errors) {
         console.log(errors);
       } else {
@@ -50,7 +50,6 @@ const CourseDetail = () => {
   return (
     <div className="actions--bar">
       <div className="wrap">
-        {/* ternary operator determined by isEditing to allow the authenticatedUser to edit the course */}
         {isEditing && (
           <span>
             <button onClick={updateCourseHandler} className="button">

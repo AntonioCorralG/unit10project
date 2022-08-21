@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 
-//signs the user out
+// Destroyng the user login
 const UserSignOut = ({context}) => {
   useEffect(() =>  context.actions.signOut());
-//directs the user to the courses page
   return (
     <Redirect to="/" />
   );

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default class Header extends React.PureComponent {
   render() {
     const { context } = this.props;
-    const authUser = context.authenticatedUser;
+    const authUser = context.loggedInuser;
     return (
       <header>
         <div className="wrap header--flex">

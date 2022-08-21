@@ -4,7 +4,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 
 //allows for updates to the course if the user.id matche the course.id
 const UpdateCourse = () => {
-  const { data, authenticatedUser } = useContext(Context);
+  const { data, loggedInuser } = useContext(Context);
   const [errors, setErrors] = useState([]);
   const [course, setCourse] = useState({});
   const history = useHistory();
@@ -28,7 +28,7 @@ const UpdateCourse = () => {
   const submitHandler = (event) => {
     event.preventDefault();
     data
-      .updateCourse(course, authenticatedUser)
+      .updateCourse(course, loggedInuser)
       .then((errors) => {
         if (errors.lengrth) {
           setErrors(errors);
@@ -43,7 +43,7 @@ const UpdateCourse = () => {
   return (
     
     <div className="wrap">
-      {authenticatedUser?.id === course?.userId ? (
+      {loggedInuser?.id === course?.userId ? (
         <div><h2> Update Course</h2>
         {errors.length ? (
           <div>
@@ -71,7 +71,7 @@ const UpdateCourse = () => {
                 value={course?.title}
               />
               <p>
-                By: {authenticatedUser?.firstName} {authenticatedUser?.lastName}
+                By: {loggedInuser?.firstName} {loggedInuser?.lastName}
               </p>
   
               <label htmlFor="description">Course Description </label>
