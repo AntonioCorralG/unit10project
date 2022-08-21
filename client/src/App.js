@@ -28,7 +28,7 @@ const CreateCourseWithContext = withContext(CreateCourse);
 const UpdateCourseWithContext = withContext(UpdateCourse);
 
 
-//use as main container
+// Used as main container
 export default () => {
   return (
     <Router>

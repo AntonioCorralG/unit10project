@@ -52,7 +52,7 @@ const CreateCourse = () => {
   return (
     <div className="wrap">
       <h2> Create Course</h2>
-      {/* ternary operator for determining whether there are errors, if so then validation errors are shown */}
+      {/* Ternary operator for determining whether there are errors, if so then validation errors are shown */}
       {errors.length ? (
         <>
           <div className="validation--errors">

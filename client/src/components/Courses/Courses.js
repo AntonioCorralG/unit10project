@@ -11,7 +11,6 @@ const Courses = (props) => {
     data
       .fetchAvailableCourses()
       .then((res) => {
-        console.log(res);
         setCourses(res)})
       .catch((err) => console.log(err));
   }, [data]);

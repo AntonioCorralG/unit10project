@@ -30,7 +30,7 @@ const UpdateCourse = () => {
     data
       .updateCourse(course, loggedInuser)
       .then((errors) => {
-        if (errors.lengrth) {
+        if (errors.length) {
           setErrors(errors);
         } else {
           history.push(`/courses/${id}`);

@@ -1,3 +1,4 @@
+// This component handles the forms and displays the relevant validation errors
 import React from 'react';
 
 const Form = (props) => {
