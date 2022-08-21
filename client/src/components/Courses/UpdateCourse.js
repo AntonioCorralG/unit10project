@@ -108,7 +108,13 @@ const UpdateCourse = () => {
           </Link>
         </form></div>
       ) : (
-        <div> You cannot update the course.</div>
+        <div> <p>You are not authorised to update the course.</p>
+          <div className="wrap">
+          <Link to="/" className="button button-secondary">
+          List courses
+        </Link>
+        </div>
+        </div>
       )}
     </div>
   );
