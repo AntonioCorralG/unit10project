@@ -9,9 +9,11 @@ const CourseDetail = () => {
   const { id } = useParams();
   const [isUpdateDeleteAllowed, setIsUpdateDeleteAllowed] = useState(false);
   const history = useHistory();
+  const [fetchDetails, setFetchDetails] = useState(true);
 
   // Fetch courses from backend
   useEffect(() => {
+    if(fetchDetails) {
     data
       .fetchCourseDetailsWithID(id)
       .then((res) => 
@@ -26,17 +28,20 @@ const CourseDetail = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, [data, id, course, loggedInuser]);
+    }
+  }, [data, id, course, loggedInuser, fetchDetails]);
 
   // Method to delete course if the ID matches the logged in user
   const deleteCourseHandler = () => {
+    setFetchDetails(false);
     data.deleteCourse(course.id, loggedInuser).then((errors) => {
-      if (errors) {
+      if (errors.length) {
         console.log(errors);
       } else {
         console.log("Course has been deleted.");
+        history.push("/");
       }
-    }).then(() => history.push("/"));
+    })
   };
 
   // This moves the user to the update component to PUT an update on a course
