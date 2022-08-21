@@ -10,7 +10,7 @@ const CreateCourse = () => {
     description: "",
     estimatedTime: "",
     materialsNeeded: "",
-    userId: authenticatedUser.id,
+    userId: authenticatedUser?.id,
   });
   const [errors, setErrrors] = useState([]);
   const history = useHistory();

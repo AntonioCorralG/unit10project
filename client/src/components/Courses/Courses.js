@@ -7,14 +7,14 @@ const Courses = (props) => {
   const [courses, setCourses] = useState([]);
   const { data } = useContext(Context);
 
-  //borrowed
   useEffect(() => {
     data
       .getCourses()
-      .then((res) => setCourses(res))
+      .then((res) => {
+        console.log(res);
+        setCourses(res)})
       .catch((err) => console.log(err));
   }, [data]);
-  //borrowed
 
   return (
     <div className="wrap main--grid">
@@ -30,7 +30,7 @@ const Courses = (props) => {
         </Link>
       ))}
   <Link
-    to={`courses/create`}
+    to={`/courses/create`}
     className= 'course--add--module course--module'
     >
       <span className="course--add--title">
