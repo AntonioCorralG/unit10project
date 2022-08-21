@@ -7,31 +7,28 @@ const CourseDetail = () => {
   const [course, setCourse] = useState({});
   const { data, loggedInuser } = useContext(Context);
   const { id } = useParams();
-  const [isEditing, setIsEditing] = useState(false);
+  const [isUpdateDeleteAllowed, setIsUpdateDeleteAllowed] = useState(false);
   const history = useHistory();
 
-  //this get the course with the response from the backend
+  // Fetch courses from backend
   useEffect(() => {
     data
       .courseDetail(id)
       .then((res) => 
       {
-        setCourse(res)})
+        setCourse(res);
+        if (course && loggedInuser && course.userId === loggedInuser.id) {
+          setIsUpdateDeleteAllowed(true);
+        } else {
+          setIsUpdateDeleteAllowed(false);
+        }
+      })
       .catch((err) => {
         console.log(err);
       });
-  }, [data, id]);
+  }, [data, id, course, loggedInuser]);
 
-  //determines if the user is the one who created the course and allows for editing
-  useEffect(() => {
-    if (course && loggedInuser && course.userId === loggedInuser.id) {
-      setIsEditing(true);
-    } else {
-      setIsEditing(false);
-    }
-  }, [course, loggedInuser]);
-
-  //method to delete course if the ID matches the logged in user
+  // Method to delete course if the ID matches the logged in user
   const deleteCourseHandler = () => {
     data.deleteCourse(course.id, loggedInuser).then((errors) => {
       if (errors) {
@@ -42,7 +39,7 @@ const CourseDetail = () => {
     }).then(() => history.push("/"));
   };
 
-  //this moves the user to the update component to PUT an update on a course
+  // This moves the user to the update component to PUT an update on a course
   const updateCourseHandler = () => {
     history.push(`/courses/${course.id}/update`);
   };
@@ -50,7 +47,7 @@ const CourseDetail = () => {
   return (
     <div className="actions--bar">
       <div className="wrap">
-        {isEditing && (
+        {isUpdateDeleteAllowed && (
           <span>
             <button onClick={updateCourseHandler} className="button">
               Update Course

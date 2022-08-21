@@ -23,6 +23,7 @@ const UpdateCourse = () => {
     const { name, value } = event.target;
     setCourse((course) => ({ ...course, [name]: value }));
   };
+  
 // Submit the user changes for course update
   const submitHandler = (event) => {
     event.preventDefault();

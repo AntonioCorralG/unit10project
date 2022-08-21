@@ -2,11 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../Context/Context";
 import { Link } from "react-router-dom";
 
-//sets the courses state
 const Courses = (props) => {
   const [courses, setCourses] = useState([]);
   const { data } = useContext(Context);
-//gets the courses with the response from the backend
+
+// Fetches the courses from the backend
   useEffect(() => {
     data
       .getCourses()
@@ -17,6 +17,7 @@ const Courses = (props) => {
   }, [data]);
 
   return (
+    
     <div className="wrap main--grid">
       {/* maps the courses out and provides a link to direct the user to the course */}
       {courses.map((courses, index) => (
