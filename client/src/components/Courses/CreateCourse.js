@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../Context/Context";
 import { Link, useHistory } from "react-router-dom";
 
@@ -11,6 +11,10 @@ const CreateCourse = () => {
   const [userId, setUserId] = useState('');
   const [errors, setErrrors] = useState([]);
   const history = useHistory();
+
+  useEffect(() => {
+    setUserId(loggedInuser?.id);
+  }, [loggedInuser]);
 
   const entered = (e) => {
     const value = e.target.value;
@@ -28,7 +32,6 @@ const CreateCourse = () => {
 // Creates the course of all the fields are valid
   const submitHandler = (e) => {
     e.preventDefault();
-    setUserId(loggedInuser?.id);
     const createCourse = {
       title,
       description,
@@ -37,7 +40,7 @@ const CreateCourse = () => {
       userId
     }
     data
-      .createCourse(createCourse, loggedInuser)
+      .createNewCourse(createCourse, loggedInuser)
       .then((errors) => {
         if (errors.length) {
           setErrrors(errors);

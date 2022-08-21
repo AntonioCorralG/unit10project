@@ -38,7 +38,7 @@ const UserSignUp =  () => {
       password
     };
     context.data
-      .createUser(user)
+      .signUpUser(user)
       .then((errors) => {
         if (errors.length) {
           setErrors(errors);

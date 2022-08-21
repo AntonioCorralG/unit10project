@@ -13,7 +13,7 @@ const CourseDetail = () => {
   // Fetch courses from backend
   useEffect(() => {
     data
-      .courseDetail(id)
+      .fetchCourseDetailsWithID(id)
       .then((res) => 
       {
         setCourse(res);

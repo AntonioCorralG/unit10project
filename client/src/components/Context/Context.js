@@ -27,8 +27,9 @@ export class Provider extends Component {
     );
   }
 
+  // Sign in action
   signIn = async (emailAddress, password) => {
-    const user = await this.data.getUser(emailAddress, password);
+    const user = await this.data.signInUser(emailAddress, password);
     if (user) {
       user.password = password;
       this.setState({loggedInuser : user});
@@ -38,6 +39,7 @@ export class Provider extends Component {
     }
   };
 
+  // Sign out action
   signOut = () => {
     this.setState({ loggedInuser: null });
   };

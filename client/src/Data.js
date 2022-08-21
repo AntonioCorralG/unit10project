@@ -14,7 +14,7 @@ export default class Data {
     if (body !== null) {
       options.body = JSON.stringify(body);
     }
-    //creates a base-64 encoded ASCII data
+
     if (reqAuth) {
       const encodedCredentials = btoa(
         `${credentials.username}:${credentials.password}`
@@ -24,16 +24,33 @@ export default class Data {
     return fetch(url, options);
   }
 
-  async getUser(emailAddress, password) {
-    const credentials = { username: emailAddress, password: password };
+  getCredentials(emailAddress, password) {
+    const credentials = {
+      username: emailAddress,
+      password: password,
+    };
+    return credentials;
+  }
+
+  // User sign up functionality
+  async signUpUser(user) {
+    const response = await this.api("/users", "POST", user);
+    if (response.status === 201) {
+      return [];
+    } else if (response.status === 400) {
+      return response.json().then((data) => {
+        return data.errors;
+      });
+    } else {
+      throw new Error();
+    }
+  }
+
+  // User sigining in functionality
+  async signInUser(emailAddress, password) {
+    const credentials = this.getCredentials(emailAddress, password);
     const response = await this.api(`/users`, "GET", null, true, credentials);
-    // if (response.status === 200) {
-    //   return response.json().then((data) => data);
-    // } else if (response.status === 401) {
-    //   return null;
-    // } else {
-    //   throw new Error();
-    // }
+
     if (response.status === 200) {
       return response.json().then((data) => data);
     } else if (
@@ -47,22 +64,8 @@ export default class Data {
     }
   }
 
-  //creates a new user
-  async createUser(user) {
-    const response = await this.api("/users", "POST", user);
-    if (response.status === 201) {
-      return [];
-    } else if (response.status === 400) {
-      return response.json().then((data) => {
-        return data.errors;
-      });
-    } else {
-      throw new Error();
-    }
-  }
-
-  //gets a list of all the courses
-  async getCourses() {
+  // Fetch all the available courses
+  async fetchAvailableCourses() {
     const response = await this.api("/courses");
     if (response.status === 200) {
       return response.json().then((data) => data);
@@ -70,8 +73,9 @@ export default class Data {
       throw new Error();
     }
   }
-  //this directs gets course details for the selected course
-  async courseDetail(id) {
+
+  // Fetch the details of the courses of a specified id
+  async fetchCourseDetailsWithID(id) {
     const response = await this.api(`/courses/${id}`);
     if (response.status === 200) {
       return response.json().then((data) => data);
@@ -80,13 +84,17 @@ export default class Data {
     }
   }
 
-  //deletes the selected course
+  // Delete the course of a specific id
   async deleteCourse(id, user) {
     const { emailAddress, password } = user;
-    const response = await this.api(`/courses/${id}`, "DELETE", {}, true, {
-      username: emailAddress,
-      password,
-    });
+    const credentials = this.getCredentials(emailAddress, password);
+    const response = await this.api(
+      `/courses/${id}`,
+      "DELETE",
+      {},
+      true,
+      credentials
+    );
     if (response.status === 204) {
       return [];
     } else {
@@ -94,15 +102,16 @@ export default class Data {
     }
   }
 
-  //updates the selected course
+  // Update the course field/s
   async updateCourse(course, user) {
     const { emailAddress, password } = user;
+    const credentials = this.getCredentials(emailAddress, password);
     const response = await this.api(
       `/courses/${course.id}`,
       "PUT",
       course,
       true,
-      { username: emailAddress, password }
+      credentials
     );
     if (response.status === 204) {
       return [];
@@ -115,12 +124,17 @@ export default class Data {
     }
   }
 
-  async createCourse(course, user) {
+  // Create a new course
+  async createNewCourse(course, user) {
     const { emailAddress, password } = user;
-    const response = await this.api(`/courses/`, "POST", course, true, {
-      username: emailAddress,
-      password,
-    });
+    const credentials = this.getCredentials(emailAddress, password);
+    const response = await this.api(
+      `/courses`,
+      "POST",
+      course,
+      true,
+      credentials
+    );
     if (response.status === 201) {
       return [];
     } else if (response.status === 400) {

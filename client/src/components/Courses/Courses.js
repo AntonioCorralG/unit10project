@@ -9,7 +9,7 @@ const Courses = (props) => {
 // Fetches the courses from the backend
   useEffect(() => {
     data
-      .getCourses()
+      .fetchAvailableCourses()
       .then((res) => {
         console.log(res);
         setCourses(res)})
