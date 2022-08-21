@@ -1,6 +1,6 @@
 import React from 'react';
 import { Consumer } from './Context/Context';
-import { Route, Redirect, useParams } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => {

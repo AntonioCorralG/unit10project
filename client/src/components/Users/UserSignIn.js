@@ -9,6 +9,55 @@ export default class UserSignIn extends Component {
     errors: [],
   };
 
+  // Handling the change in the email address and password state variables
+  change = (e) => {
+    const value = e.target.value;
+    if (e.target.name === "emailAddress") {
+      this.setState({ emailAddress: value });
+    } else if (e.target.name === "password") {
+      this.setState({ password: value });
+    }
+  };
+
+  // To login the user
+  submit = () => {
+    if (this.state.emailAddress.length > 0 && this.state.password.length > 0) {
+      const { context } = this.props;
+      const { from } = this.props.location.state || {
+        from: { pathname: "/" },
+      };
+      const { emailAddress, password } = this.state;
+
+      context.actions
+        .signIn(emailAddress, password)
+        .then((user) => {
+          if (user === null) {
+            this.setState({ errors: ["Invalid credentials!!!"] });
+          } else {
+            this.props.history.push(from);
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          this.props.history.push("/error");
+        });
+    } else {
+      const error = [];
+      if (this.state.emailAddress.length === 0) {
+        error.push("Email address is a mandatory field");
+      }
+      if (this.state.password.length === 0) {
+        error.push("Password is a mandatory field");
+      }
+      this.setState({ errors: error });
+    }
+  };
+
+  // Loads back the course page
+  cancel = () => {
+    this.props.history.push("/");
+  };
+
   render() {
     const { emailAddress, password, errors } = this.state;
 
@@ -48,58 +97,4 @@ export default class UserSignIn extends Component {
       </div>
     );
   }
-
-  //displays what the user typed on the DOM
-  change = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    this.setState(() => {
-      return {
-        [name]: value,
-      };
-    });
-  };
-//submits the user's authentication information
-  submit = () => {
-    if(this.state.emailAddress.length > 0 && this.state.password.length > 0) {
-    const { context } = this.props;
-    const { from } = this.props.location.state || {
-      from: { pathname: "/" },
-    };
-    const { emailAddress, password } = this.state;
-
-    context.actions
-      .signIn(emailAddress, password)
-      .then((user) => {
-        if (user === null) {
-          // this.setState(() => {
-          //   return { errors: ["Sign-in was unsuccessful"] };
-          // });
-          this.setState({ errors : ["Invalid credentials!!!"]});
-        } else {
-          this.props.history.push(from);
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-        this.props.history.push("/error");
-      });
-    }
-    else {
-      const error = [];
-      if(this.state.emailAddress.length  == 0) {
-        error.push("Email address is a mandatory field");
-      }
-      if(this.state.password.length == 0) {
-        error.push("Password is a mandatory field");
-      }
-      this.setState({errors : error});
-    }
-  };
-
-  //pushes the user to the courses page
-  cancel = () => {
-    this.props.history.push("/");
-  };
 }

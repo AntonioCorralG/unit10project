@@ -55,16 +55,16 @@ const UserSignUp =  () => {
     }
     else {
       const error = [];
-      if(firstName.length  == 0) {
+      if(firstName.length  === 0) {
         error.push("First Name is a mandatory field");
       }
-      if(lastName.length == 0) {
+      if(lastName.length === 0) {
         error.push("Last Name is a mandatory field");
       }
-      if(emailAddress.length == 0) {
+      if(emailAddress.length === 0) {
         error.push("Email address is a mandatory field");
       }
-      if(password.length == 0) {
+      if(password.length === 0) {
         error.push("Password is a mandatory field");
       }
       setErrors(error);
